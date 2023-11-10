@@ -312,6 +312,10 @@ function setColor(col)
                                   Math.floor(Math.random()*256) ) );  
 }
 
+function setColorRGB(r, g, b) {
+  bufColor = ('0xFF' + convert(r, g, b));
+}
+
 
 function drawRectangle(x1,y1,x2,y2)
 {
