@@ -4,6 +4,31 @@ const ctx = canvas.getContext("2d");
 let color = [34, 139, 34]; // Green color for the fractals
 let width = 2;
 
+function showLineNumbers() {
+  document.getElementById("lineNumbers").innerHTML = "";
+
+
+  for (var rep = 0; rep < 30; rep++) {
+    document.getElementById("lineNumbers").innerHTML += (rep+1) + "<br />";
+  }
+}
+
+function run() {
+  var program = document.getElementById('input').value;
+  var programHolder = document.getElementById('holder');
+
+
+  if (programHolder) {
+    programHolder.parentNode.removeChild(programHolder);
+  }
+
+
+  var newProgram = document.createElement('script');
+  newProgram.id = 'holder';
+  newProgram.text = program;
+  document.body.appendChild(newProgram);
+}
+
 function getColor(x, y, mult = 1) {
   // Adjust these values to control the color gradient
   const r = Math.floor(128 + 128 * Math.sin((x ** 1.25 / 205) * mult));
@@ -117,6 +142,14 @@ function drawNGonFractal(
   }
 }
 
+function clear() {
+  ctx.fillStyle = "#fff";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  ctx.strokeStyle = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
+  ctx.lineWidth = width;
+}
+
 function fractalTree(x, y, length, angle, depth) {
   if (depth === 0) {
     return;
@@ -132,6 +165,9 @@ function fractalTree(x, y, length, angle, depth) {
   fractalTree(x2, y2, length * 0.7, angle - Math.PI / 4, depth - 1);
   fractalTree(x2, y2, length * 0.7, angle + Math.PI / 4, depth - 1);
 }
+
+// Example: Draw a fractal tree
+fractalTree(400, 500, 80, -Math.PI / 2, 5);
 
 function example1() {
   for (i = 0; i < 17; i++) {
@@ -165,9 +201,7 @@ function example5() {
   }
 }
 
-
-
-function clear() {
+function draw() {
   ctx.fillStyle = "#fff";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -178,21 +212,12 @@ function clear() {
 
   //dragonCurve(200, 400, 400, 400, 11)
 
-  //drawNGonFractal(400, 300, 2, 35, 4,1.6)  
+  //drawNGonFractal(400, 300, 2, 35, 4,1.6)
+
+  
+  
   //fractalTree(400, 500, 80, -Math.PI / 2, 11);
 }
 
 // Call the draw function
-//draw();
-
-function runUserCode() {
-  const userCode = document.getElementById("userCode").value;
-
-  try {
-    // Use eval to execute the user's JavaScript code
-    clear();
-    eval(userCode);
-  } catch (error) {
-    console.error("Error in user code:", error);
-  }
-}
+draw();

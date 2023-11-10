@@ -5,25 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fancy Fractals</title>
   <link rel="stylesheet" href="draw.css">
-  <style>
-    body {
-      font-size: 14.0px;
-      font-family: "courier new";
-    }
-    /* #lineNumbers {
-      position: absolute;
-      margin-left: 0px;
-      margin-top: 5px;
-    } */
-  </style>
 </head>
-<body style="color: blue" onload="showLineNumbers();">
-  <div id="lineNumbers"></div>
-  <textarea id="input" rows="31" cols="40">example5();</textarea>
-  <button id="runIt" onclick="run();">Run</button>
+<body>
   <div class="container">
     <canvas id="myCanvas" width="800" height="600"></canvas>
   </div>
+
+  <div class="user-input">
+    <textarea id="userCode" placeholder="Type your JavaScript code here..."></textarea>
+    <button onclick="runUserCode()">Run Code</button>
+  </div>
+
   <script src="draw.js"></script>
 </body>
 </html>
