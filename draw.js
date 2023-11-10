@@ -165,7 +165,33 @@ function example5() {
   }
 }
 
+function example6() {
+  for (i = 0; i < 1; i++) {
+    drawNGonFractal(400, 400, 3, 100, 7, 0.2 * i+180*3.14/360, 0.2);
+  }
+}
 
+function example7() {
+  for (i = 0; i < 1; i++) {
+    drawNGonFractal(400, 300, 4, 75, 5, 3.14/360 * i*37+180*3.14/360, 0.2);
+  }
+}
+
+function example8() {
+  for (i = 0; i < 20; i++) {
+    drawNGonFractal(400, 300, 2, 75, 5, 3.14/360 * i*1+180*3.14/360, 0.2);
+  }
+}
+
+function example9() {
+  for (i = 0; i < 20; i++) {
+    drawNGonFractal(400, 300, 3, 75, 5, 3.14/360 * i*1+180*3.14/360, 0.2);
+  }
+}
+
+function example10() {
+  fractalTree(400, 500, 80, -Math.PI / 2, 15);
+}
 
 function clear() {
   ctx.fillStyle = "#fff";
