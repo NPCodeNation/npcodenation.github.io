@@ -224,6 +224,7 @@ function print(str)
 function run() 
 {
   var start=Date.now();
+  data = ctx.createImageData(600,600);
   isCalculating = 1;
   setState();
   var program = document.getElementById('input').value;
