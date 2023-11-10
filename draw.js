@@ -4,6 +4,31 @@ const ctx = canvas.getContext("2d");
 let color = [34, 139, 34]; // Green color for the fractals
 let width = 2;
 
+function showLineNumbers() {
+  document.getElementById("lineNumbers").innerHTML = "";
+
+
+  for (var rep = 0; rep < 30; rep++) {
+    document.getElementById("lineNumbers").innerHTML += (rep+1) + "<br />";
+  }
+}
+
+function run() {
+  var program = document.getElementById('input').value;
+  var programHolder = document.getElementById('holder');
+
+
+  if (programHolder) {
+    programHolder.parentNode.removeChild(programHolder);
+  }
+
+
+  var newProgram = document.createElement('script');
+  newProgram.id = 'holder';
+  newProgram.text = program;
+  document.body.appendChild(newProgram);
+}
+
 function getColor(x, y, mult = 1) {
   // Adjust these values to control the color gradient
   const r = Math.floor(128 + 128 * Math.sin((x ** 1.25 / 205) * mult));
@@ -181,7 +206,7 @@ function draw() {
 
   //drawNGonFractal(400, 300, 2, 35, 4,1.6)
 
-  example5();
+  
   
   //fractalTree(400, 500, 80, -Math.PI / 2, 11);
 }
