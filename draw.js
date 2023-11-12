@@ -36,13 +36,9 @@ function circle(x, y, r) {
   ctx.stroke();
 }
 
-function arc(ax, ay, bx, by, degree_curvature = 0.5) {
-  let radius = Math.sqrt(Math.pow(bx - ax, 2) + Math.pow(by - ay, 2)) * degree_curvature;
-  let startAngle = Math.atan2(by - ay, bx - ax);
-  let endAngle = startAngle + Math.PI * degree_curvature;
-
+function arc(x, y, radius, startAngle, endAngle, counterclockwise = false) {
   ctx.beginPath();
-  ctx.arc(ax, ay, radius, startAngle, endAngle);
+  ctx.arc(x, y, radius, startAngle, endAngle);
   ctx.lineWidth = width;
   ctx.strokeStyle = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
   ctx.stroke();
