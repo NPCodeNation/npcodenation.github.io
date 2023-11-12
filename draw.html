@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fancy Fractals</title>
   <link rel="stylesheet" href="draw.css">
+  
 </head>
 <body>
   <div class="container">
@@ -12,12 +13,37 @@
   </div>
 
   <div class="user-input">
-    <textarea id="userCode" placeholder="Type your JavaScript code here..." style="width:500px; height:300px; margin: 2rem;">example1();</textarea>
+    <div id="userCode" style="width: 42rem; height:500px; margin: 2rem;"></div>
     <br>
     <button onclick="runUserCode()">Run Code</button>
     <p><a href="https://docs.google.com/document/d/1SkGUOuuPHrjlML5k2vzL-XpaLxC1MxxEFLSST4I__w0/edit?usp=sharing" target=_blank>Documentation</a></p>
   </div>
 
   <script src="draw.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.26.1/min/vs/loader.min.js"></script>
+  <script>
+    // require is provided by loader.min.js.
+    require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.26.1/min/vs' }});
+    require(["vs/editor/editor.main"], () => {
+      window.editor = monaco.editor.create(document.getElementById('userCode'), {
+        value: `example1();`,
+        language: 'javascript',
+        theme: 'vs-dark',
+      });
+    });
+    
+    function runUserCode() {
+      const userCode = window.editor.getValue();
+      console.log(userCode);
+
+      try {
+        // Use eval to execute the user's JavaScript code
+        clear();
+        eval(userCode);
+      } catch (error) {
+        console.error("Error in user code:", error);
+      }
+    }
+  </script>
 </body>
 </html>

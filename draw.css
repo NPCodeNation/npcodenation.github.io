@@ -39,4 +39,8 @@ button {
   cursor: pointer;
 }
 
+#userCode {
+  text-align: left;
+}
+
 /* Add other existing CSS rules as needed */

@@ -4,22 +4,6 @@ const ctx = canvas.getContext("2d");
 let color = [34, 139, 34]; // Green color for the fractals
 let width = 2;
 
-document.getElementById('userCode').addEventListener('keydown', function(e) {
-  if (e.key == 'Tab') {
-    e.preventDefault();
-    var start = this.selectionStart;
-    var end = this.selectionEnd;
-
-    // set textarea value to: text before caret + tab + text after caret
-    this.value = this.value.substring(0, start) +
-      "\t" + this.value.substring(end);
-
-    // put caret at right position again
-    this.selectionStart =
-      this.selectionEnd = start + 1;
-  }
-});
-
 function getColor(x, y, mult = 1) {
   // Adjust these values to control the color gradient
   const r = Math.floor(128 + 128 * Math.sin((x ** 1.25 / 205) * mult));
@@ -406,26 +390,4 @@ function clear() {
 
   ctx.strokeStyle = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
   ctx.lineWidth = width;
-
-  //drawSierpinskiTriangle(0, 300, 200, 000, 400, 300, 5);
-
-  //dragonCurve(200, 400, 400, 400, 11)
-
-  //drawNGonFractal(400, 300, 2, 35, 4,1.6)  
-  //fractalTree(400, 500, 80, -Math.PI / 2, 11);
-}
-
-// Call the draw function
-//draw();
-
-function runUserCode() {
-  const userCode = document.getElementById("userCode").value;
-
-  try {
-    // Use eval to execute the user's JavaScript code
-    clear();
-    eval(userCode);
-  } catch (error) {
-    console.error("Error in user code:", error);
-  }
 }
