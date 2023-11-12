@@ -24,6 +24,141 @@ function line(ax, ay, bx, by, mult = 1) {
   ctx.stroke();
 }
 
+function circle(x, y, r) {
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, 2 * Math.PI, false);
+  ctx.lineWidth = width;
+  ctx.strokeStyle = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
+  ctx.stroke();
+}
+
+function arc(ax, ay, bx, by, degree_curvature = 0.5) {
+  let radius = Math.sqrt(Math.pow(bx - ax, 2) + Math.pow(by - ay, 2)) * degree_curvature;
+  let startAngle = Math.atan2(by - ay, bx - ax);
+  let endAngle = startAngle + Math.PI * degree_curvature;
+
+  ctx.beginPath();
+  ctx.arc(ax, ay, radius, startAngle, endAngle);
+  ctx.lineWidth = width;
+  ctx.strokeStyle = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
+  ctx.stroke();
+}
+
+function rect(x_low, x_high, y_low, y_high) {
+  ctx.beginPath();
+  ctx.rect(x_low, y_low, x_high - x_low, y_high - y_low);
+  ctx.lineWidth = width;
+  ctx.strokeStyle = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
+  ctx.stroke();
+}
+
+function regularPolygon(center_x, center_y, sides = 6, radius = 50) {
+  let angle_offset = Math.random() * 2 * Math.PI;
+  ctx.beginPath();
+  for (let i = 0; i <= sides; i++) {
+      let angle = angle_offset + i * 2 * Math.PI / sides;
+      let x = center_x + radius * Math.cos(angle);
+      let y = center_y + radius * Math.sin(angle);
+      if (i === 0) {
+          ctx.moveTo(x, y);
+      } else {
+          ctx.lineTo(x, y);
+      }
+  }
+  ctx.lineWidth = width;
+  ctx.strokeStyle = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
+  ctx.stroke();
+}
+
+function polygon(x_array, y_array) {
+  ctx.beginPath();
+  for (let i = 0; i < x_array.length; i++) {
+      if (i === 0) {
+          ctx.moveTo(x_array[i], y_array[i]);
+      } else {
+          ctx.lineTo(x_array[i], y_array[i]);
+      }
+  }
+  ctx.closePath();
+  ctx.lineWidth = width;
+  ctx.strokeStyle = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
+  ctx.stroke();
+}
+
+
+function blendColors(blend_mult, x, y, r) {
+  // Get the image data for the circle
+  let imageData = ctx.getImageData(x - r, y - r, r * 2, r * 2);
+  let data = imageData.data;
+
+  // Calculate the average color
+  let avg_color = [0, 0, 0];
+  let count = 0;
+  for (let i = 0; i < data.length; i += 4) {
+      let px_x = (i / 4) % (r * 2) - r;
+      let px_y = Math.floor(i / 4 / (r * 2)) - r;
+      if (px_x * px_x + px_y * px_y <= r * r) {
+          avg_color[0] += data[i];
+          avg_color[1] += data[i + 1];
+          avg_color[2] += data[i + 2];
+          count++;
+      }
+  }
+  avg_color = avg_color.map(v => v / count);
+
+  // Apply the blend
+  for (let i = 0; i < data.length; i += 4) {
+      let px_x = (i / 4) % (r * 2) - r;
+      let px_y = Math.floor(i / 4 / (r * 2)) - r;
+      if (px_x * px_x + px_y * px_y <= r * r) {
+          data[i] = data[i] * (1 - blend_mult) + avg_color[0] * blend_mult;
+          data[i + 1] = data[i + 1] * (1 - blend_mult) + avg_color[1] * blend_mult;
+          data[i + 2] = data[i + 2] * (1 - blend_mult) + avg_color[2] * blend_mult;
+      }
+  }
+
+  // Put the image data back
+  ctx.putImageData(imageData, x - r, y - r);
+}
+
+function giveListFractalPoints(x, y, n, r, size_mult, iterations) {
+  let points = [];
+  let angle_offset = Math.random() * 2 * Math.PI;
+
+  // Generate the initial polygon points
+  for (let i = 0; i < n; i++) {
+      let angle = angle_offset + i * 2 * Math.PI / n;
+      points.push([x + r * Math.cos(angle), y + r * Math.sin(angle)]);
+  }
+
+  // Generate the fractal points
+  for (let iter = 0; iter < iterations; iter++) {
+      let new_points = [];
+      for (let i = 0; i < points.length; i++) {
+          let point = points[i];
+          let next_point = points[(i + 1) % points.length];
+          let mid_point = [(point[0] + next_point[0]) / 2, (point[1] + next_point[1]) / 2];
+          let angle = Math.atan2(mid_point[1] - y, mid_point[0] - x) + Math.PI / 2;
+          new_points.push([
+              mid_point[0] + size_mult * r * Math.cos(angle),
+              mid_point[1] + size_mult * r * Math.sin(angle)
+          ]);
+      }
+      points = points.concat(new_points);
+      r *= size_mult;
+  }
+
+  return points;
+}
+
+function random_float(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
+function set_random_color() {
+  color = [Math.floor(Math.random() * 256), Math.floor(Math.random() * 256), Math.floor(Math.random() * 256)];
+}
+
 function drawSierpinskiTriangle(x1, y1, x2, y2, x3, y3, depth) {
   if (depth === 0) {
     line(x1, y1, x2, y2);
@@ -191,6 +326,11 @@ function example9() {
 
 function example10() {
   fractalTree(400, 500, 80, -Math.PI / 2, 15);
+}
+
+function example11() {
+  example1();
+  blendColors(0.3,400,300,200);
 }
 
 function clear() {
