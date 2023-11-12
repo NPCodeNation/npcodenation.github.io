@@ -13,6 +13,10 @@ function getColor(x, y, mult = 1) {
   return [r, g, b];
 }
 
+function setColor(r, g, b) {
+  color = [r, g, b];
+}
+
 function line(ax, ay, bx, by, mult = 1) {
   z = (Math.atan(ax / 100) * 255) / 3.2;
   color = getColor(ax, ay, mult);
