@@ -158,11 +158,11 @@ function giveListFractalPoints(x, y, n, r, size_mult, iterations) {
   return points;
 }
 
-function random_float(min, max) {
+function randomFloat(min, max) {
   return Math.random() * (max - min) + min;
 }
 
-function set_random_color() {
+function setRandomColor() {
   color = [Math.floor(Math.random() * 256), Math.floor(Math.random() * 256), Math.floor(Math.random() * 256)];
 }
 
