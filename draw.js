@@ -95,6 +95,9 @@ function blendColors(blend_mult, x, y, r) {
   let avg_color = [0, 0, 0];
   let count = 0;
   for (let i = 0; i < data.length; i += 4) {
+      if (data[i] == 255 && data[i+1] == 255 && data[i+2] == 255) {
+          continue;
+      }
       let px_x = (i / 4) % (r * 2) - r;
       let px_y = Math.floor(i / 4 / (r * 2)) - r;
       if (px_x * px_x + px_y * px_y <= r * r) {
@@ -330,7 +333,7 @@ function example10() {
 
 function example11() {
   example1();
-  blendColors(0.3,400,300,200);
+  blendColors(0.6,420,300,110);
 }
 
 function clear() {
