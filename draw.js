@@ -271,6 +271,54 @@ function drawNGonFractal(
   }
 }
 
+function dist(x1,y1,x2,y2) {
+  return Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
+}
+
+function convert(x1,y1,x2,y2,mult=0.5) {
+  let midX = (x1+x2)/2;
+  let midY = (y1+y2)/2;
+  
+  lenS = dist(x1,y1,x2,y2);
+  
+  let unitPerp = [(y1-y2)/lenS,(x2-x1)/lenS]
+  // algebraically let d - dist from line
+  
+  let angle = Math.abs(mult)*Math.PI/2;
+  let d = lenS / (2*Math.tan(angle));
+  
+  let offX = unitPerp[0]*d;
+  let offY = unitPerp[1]*d;
+  
+  let cx = offX+midX;
+  let cy = offY+midY;
+
+  if (mult<0) {
+    cx = -offX + midX;
+    cy = -offY + midY;
+  }
+
+  let radius = d / Math.cos(angle);
+  
+  // angle is half the full angle
+  
+  let start_angle = Math.atan2(y1-cy,x1-cx);
+  let end_angle = Math.atan2(y2-cy,x2-cx);
+  
+  if (mult < 0) {
+    let temp = end_angle;
+    end_angle = start_angle;
+    start_angle = temp;
+  }
+
+  return [cx,cy,radius,start_angle,end_angle];
+}
+
+function curvedLine(x1,y1,x2,y2,mult,flip=false){
+  let k = convert(x1,y1,x2,y2,mult);
+  arc(k[0],k[1],k[2],k[3],k[4],flip);
+}
+
 function fractalTree(x, y, length, angle, depth) {
   if (depth === 0) {
     return;
