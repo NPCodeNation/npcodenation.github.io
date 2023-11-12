@@ -52,8 +52,8 @@ function rect(x_low, x_high, y_low, y_high) {
   ctx.stroke();
 }
 
-function regularPolygon(center_x, center_y, sides = 6, radius = 50) {
-  let angle_offset = Math.random() * 2 * Math.PI;
+function regularPolygon(center_x, center_y, sides = 6, radius = 50, angle_offset = 0) {
+  // let angle_offset = Math.random() * 2 * Math.PI;
   ctx.beginPath();
   for (let i = 0; i <= sides; i++) {
       let angle = angle_offset + i * 2 * Math.PI / sides;
