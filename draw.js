@@ -180,7 +180,6 @@ function drawSierpinskiTriangle(x1, y1, x2, y2, x3, y3, depth) {
   drawSierpinskiTriangle(x1, y1, mid1x, mid1y, mid3x, mid3y, depth - 1);
   drawSierpinskiTriangle(mid1x, mid1y, x2, y2, mid2x, mid2y, depth - 1);
   drawSierpinskiTriangle(mid3x, mid3y, mid2x, mid2y, x3, y3, depth - 1);
-  //drawSierpinskiTriangle(mid1x, mid3y, x2, mid2y, x3, y3, depth - 1);
 }
 
 function drawRandomFractalPattern(x, y, n, r, size_mult, iterations) {
@@ -303,7 +302,7 @@ function curvedLine(x1,y1,x2,y2,mult,flip=false){
   arc(k[0],k[1],k[2],k[3],k[4],flip);
 }
 
-function fractalTree(x, y, length, angle, depth) {
+function fractalTree(x, y, length, angle, depth, k=0.7) {
   if (depth === 0) {
     return;
   }
@@ -315,74 +314,131 @@ function fractalTree(x, y, length, angle, depth) {
   line(x,y,x2,y2)
 
   // Recursively draw two sub-branches
-  fractalTree(x2, y2, length * 0.7, angle - Math.PI / 4, depth - 1);
-  fractalTree(x2, y2, length * 0.7, angle + Math.PI / 4, depth - 1);
+  fractalTree(x2, y2, length * k, angle - Math.PI / 4, depth - 1,k);
+  fractalTree(x2, y2, length * k, angle + Math.PI / 4, depth - 1,k);
 }
 
+function kochSnowflakeSegment(x1, y1, x2, y2, depth) {
+  if (depth === 0) {
+    line(x1, y1, x2, y2);
+    return;
+  }
+
+  const deltaX = x2 - x1;
+  const deltaY = y2 - y1;
+
+  const x3 = x1 + deltaX / 3;
+  const y3 = y1 + deltaY / 3;
+
+  const x4 = (x1 + x2) / 2 + (Math.sqrt(3) / 6) * (y1 - y2);
+  const y4 = (y1 + y2) / 2 + (Math.sqrt(3) / 6) * (x2 - x1);
+
+  const x5 = x1 + 2 * deltaX / 3;
+  const y5 = y1 + 2 * deltaY / 3;
+
+  kochSnowflakeSegment(x1, y1, x3, y3, depth - 1);
+  kochSnowflakeSegment(x3, y3, x4, y4, depth - 1);
+  kochSnowflakeSegment(x4, y4, x5, y5, depth - 1);
+  kochSnowflakeSegment(x5, y5, x2, y2, depth - 1);
+}
+
+// Glorious circle
 function example1() {
   for (i = 0; i < 17; i++) {
     drawNGonFractal(400, 300, 7, 50, 2, 0.2 * i, 0.3);
   }
 }
 
+// Helm
 function example2() {
   for (i = 0; i < 17; i++) {
     drawNGonFractal(400, 300, 2, 50, 5, 0.2 * i, 0.2);
   }
 }
 
+// Triangle but Circle
 function example3() {
   for (i = 0; i < 17; i++) {
     drawNGonFractal(400, 300, 3, 100, 3, 0.2 * i, 0.2);
   }
 }
 
+// IDK
 function example4() {
   for (i = 0; i < 17; i++) {
     drawNGonFractal(400 - 10 * i, 20 * i + 150, 2, 70, 4, 0.2 * i, 0.7);
   }
 }
 
+// why
 function example5() {
-  for (j = 0; j < 1; j++) {
-    for (i = 0; i < 17; i++) {
-      drawNGonFractal(400, 10 * i + 150, 4, 150, 2, 0.2 * i+1.3*j, 0.7);
+    let reduc = .3;
+    for (i = 0; i < 74*reduc; i=i+reduc) {
+        drawNGonFractal(400, 10 * i + 200, 3, 150*reduc*1.5, 2, 0.1 * i, 0.7);
     }
-  }
 }
 
+// Gradient Serpinski's Triangle
 function example6() {
-  for (i = 0; i < 1; i++) {
-    drawNGonFractal(400, 400, 3, 100, 7, 0.2 * i+180*3.14/360, 0.2);
-  }
+    for (i = 0; i < 1; i++) {
+        drawNGonFractal(400, 400, 3, 100, 7, 0.2 * i+180*3.14/360, 0.2);
+    }
 }
 
+// Nice fractal square grid
+// Set loop to not be 1, to rotate onto itself
 function example7() {
   for (i = 0; i < 1; i++) {
-    drawNGonFractal(400, 300, 4, 75, 5, 3.14/360 * i*37+180*3.14/360, 0.2);
-  }
+      drawNGonFractal(400, 300, 4, 75, 5, 3.14/360 * i*37+180*3.14/360, 0.2);
+    }
 }
 
-function example8() {
-  for (i = 0; i < 20; i++) {
-    drawNGonFractal(400, 300, 2, 75, 5, 3.14/360 * i*1+180*3.14/360, 0.2);
-  }
+// antenna...?
+function example8(x=400,y=300,d=75) {
+  for (i = 0; i < 75; i++) {
+      drawNGonFractal(x, y, 2, d, 0.5*Math.floor(d*0.053)+3, 3.14/360 * i*1+180*3.14/360, 0.2);
+    }
 }
 
+// jittery triangle fractal
 function example9() {
-  for (i = 0; i < 20; i++) {
-    drawNGonFractal(400, 300, 3, 75, 5, 3.14/360 * i*1+180*3.14/360, 0.2);
-  }
+    for (i = 0; i < 20; i++) {
+        drawNGonFractal(400, 300, 3, 75, 5, 3.14/360 * i*1+180*3.14/360, 0.2);
+    }
 }
 
-function example10() {
-  fractalTree(400, 500, 80, -Math.PI / 2, 15);
+
+// fractal tree!
+// Try with n=19
+function example10(n=13) {
+    fractalTree(400, 600, 200, -Math.PI / 2, n);
 }
 
+// flower ... hexagon?
 function example11() {
-  example1();
-  blendColors(0.6,420,300,110);
+    for (i=0; i<52; i++) {
+        regularPolygon(center_x=400, center_y=300, sides = 6, radius = 50+i*3, angle_offset = 0+3*i*6.28/360)
+    }
 }
+
+// cone
+function example12() {
+    for (i=0; i<35; i=i+0.3) {
+        color = getColor(400, 500-20*i, mult = 0.25);
+        regularPolygon(center_x=200, center_y=500-10*i, sides = 14, radius = i*4, angle_offset = 0+6*i*6.28/360);
+    }
+}
+
+// shard
+function example13(x=400,y=300) {
+    for (i=0; i<35; i=i+0.1) {
+        let temp = 128+Math.round(126*Math.sin(-i*2*Math.PI/35));
+        setColor(temp*0.32,temp*0.89,temp+60);
+        regularPolygon(center_x=x, center_y=y-10*i+230, sides = 2, radius = i*3, angle_offset = 0+2.*i*6.28/360);
+    }
+}
+
+
 
 function clear() {
   ctx.fillStyle = "#fff";
