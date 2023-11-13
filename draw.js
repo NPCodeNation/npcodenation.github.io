@@ -401,7 +401,7 @@ function example8(x=400,y=300,d=75){
 }
 
 // jittery triangle fractal
-function example9(){
+function example9() {
     for (i = 0; i < 20; i++) {
         drawNGonFractal(400, 300, 3, 75, 5, 3.14/360 * i*1+180*3.14/360, 0.2);
     }
