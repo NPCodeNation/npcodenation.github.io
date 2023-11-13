@@ -430,7 +430,7 @@ function example12(){
 }
 
 // shard
-function example13(x=400,y=300){
+function example13(x=400,y=300) {
     for (i=0; i<35; i=i+0.1){
         let temp = 128+Math.round(126*Math.sin(-i*2*Math.PI/35));
         setColor(temp*0.32,temp*0.89,temp+60);
