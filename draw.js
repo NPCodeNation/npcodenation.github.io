@@ -422,7 +422,7 @@ function example11() {
 }
 
 // cone
-function example12(){
+function example12() {
     for (i=0; i<35; i=i+0.3){
         color = getColor(400, 500-20*i, mult = 0.25);
         regularPolygon(center_x=200, center_y=500-10*i, sides = 14, radius = i*4, angle_offset = 0+6*i*6.28/360);
