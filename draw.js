@@ -387,7 +387,7 @@ function example6(){
 
 // Nice fractal square grid
 // Set loop to not be 1, to rotate onto itself
-function example7(){
+function example7() {
   for (i = 0; i < 1; i++) {
       drawNGonFractal(400, 300, 4, 75, 5, 3.14/360 * i*37+180*3.14/360, 0.2);
     }
