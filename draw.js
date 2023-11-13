@@ -379,7 +379,7 @@ function example5() {
 }
 
 // Gradient Serpinski's Triangle
-function example6(){
+function example6() {
     for (i = 0; i < 1; i++) {
         drawNGonFractal(400, 400, 3, 100, 7, 0.2 * i+180*3.14/360, 0.2);
     }
