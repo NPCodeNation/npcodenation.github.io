@@ -410,7 +410,7 @@ function example9(){
 
 // fractal tree!
 // Try with n=19
-function example10(n=13){
+function example10(n=13) {
     fractalTree(400, 600, 200, -Math.PI / 2, n);
 }
 
