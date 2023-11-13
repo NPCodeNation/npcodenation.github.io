@@ -431,7 +431,7 @@ function example12(){
 
 // shard
 function example13(x=400,y=300) {
-    for (i=0; i<35; i=i+0.1){
+    for (i=0; i<35; i=i+0.1) {
         let temp = 128+Math.round(126*Math.sin(-i*2*Math.PI/35));
         setColor(temp*0.32,temp*0.89,temp+60);
         regularPolygon(center_x=x, center_y=y-10*i+230, sides = 2, radius = i*3, angle_offset = 0+2.*i*6.28/360);
