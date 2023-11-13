@@ -297,7 +297,7 @@ function convert(x1,y1,x2,y2,mult=0.5) {
   return [cx,cy,radius,start_angle,end_angle];
 }
 
-function curvedLine(x1,y1,x2,y2,mult,flip=false){
+function curvedLine(x1,y1,x2,y2,mult,flip=false) {
   let k = convert(x1,y1,x2,y2,mult);
   arc(k[0],k[1],k[2],k[3],k[4],flip);
 }
