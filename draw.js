@@ -394,7 +394,7 @@ function example7(){
 }
 
 // antenna...?
-function example8(x=400,y=300,d=75){
+function example8(x=400,y=300,d=75) {
   for (i = 0; i < 75; i++) {
       drawNGonFractal(x, y, 2, d, 0.5*Math.floor(d*0.053)+3, 3.14/360 * i*1+180*3.14/360, 0.2);
     }
