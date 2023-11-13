@@ -302,7 +302,7 @@ function curvedLine(x1,y1,x2,y2,mult,flip=false){
   arc(k[0],k[1],k[2],k[3],k[4],flip);
 }
 
-function fractalTree(x, y, length, angle, depth,k=0.7) {
+function fractalTree(x, y, length, angle, depth, k=0.7) {
   if (depth === 0) {
     return;
   }
