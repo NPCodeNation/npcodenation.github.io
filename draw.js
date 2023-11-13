@@ -415,7 +415,7 @@ function example10(n=13){
 }
 
 // flower ... hexagon?
-function example11(){
+function example11() {
     for (i=0; i<52; i++){
         regularPolygon(center_x=400, center_y=300, sides = 6, radius = 50+i*3, angle_offset = 0+3*i*6.28/360)
     }
