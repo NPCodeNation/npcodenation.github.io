@@ -263,8 +263,16 @@ function convert(x1,y1,x2,y2,mult=0.5) {
 }
 
 function curvedLine(x1,y1,x2,y2,mult,flip=false) {
-  let k = convert(x1,y1,x2,y2,mult);
-  arc(k[0],k[1],k[2],k[3],k[4],flip);
+  let k = 0;
+  if (flip)
+  {
+    k = convert(x1,y1,x2,y2,mult);
+  }
+  else
+  {
+    k = convert(x2,y2,x1,y1,mult);
+  }
+  arc(k[0],k[1],k[2],k[3],k[4]);
 }
 
 function fractalTree(x, y, length, angle, depth, k=0.7) {
