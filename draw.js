@@ -17,9 +17,13 @@ function setColor(r, g, b) {
   color = [r, g, b];
 }
 
-function line(ax, ay, bx, by, mult = 1) {
-  z = (Math.atan(ax / 100) * 255) / 3.2;
-  color = getColor(ax, ay, mult);
+function line(ax, ay, bx, by, do_rainbow=false, mult=1) {
+  if (do_rainbow)
+  {
+    color = getColor(ax, ay, mult);
+  setColor(color[0],color[1],color[2]);
+  }
+  
   ctx.strokeStyle = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
   ctx.beginPath();
   ctx.moveTo(ax, ay);
@@ -124,36 +128,6 @@ function blendColors(blend_mult, x, y, r) {
   ctx.putImageData(imageData, x - r, y - r);
 }
 
-function giveListFractalPoints(x, y, n, r, size_mult, iterations) {
-  let points = [];
-  let angle_offset = Math.random() * 2 * Math.PI;
-
-  // Generate the initial polygon points
-  for (let i = 0; i < n; i++) {
-      let angle = angle_offset + i * 2 * Math.PI / n;
-      points.push([x + r * Math.cos(angle), y + r * Math.sin(angle)]);
-  }
-
-  // Generate the fractal points
-  for (let iter = 0; iter < iterations; iter++) {
-      let new_points = [];
-      for (let i = 0; i < points.length; i++) {
-          let point = points[i];
-          let next_point = points[(i + 1) % points.length];
-          let mid_point = [(point[0] + next_point[0]) / 2, (point[1] + next_point[1]) / 2];
-          let angle = Math.atan2(mid_point[1] - y, mid_point[0] - x) + Math.PI / 2;
-          new_points.push([
-              mid_point[0] + size_mult * r * Math.cos(angle),
-              mid_point[1] + size_mult * r * Math.sin(angle)
-          ]);
-      }
-      points = points.concat(new_points);
-      r *= size_mult;
-  }
-
-  return points;
-}
-
 function randomFloat(min, max) {
   return Math.random() * (max - min) + min;
 }
@@ -182,15 +156,6 @@ function drawSierpinskiTriangle(x1, y1, x2, y2, x3, y3, depth) {
   drawSierpinskiTriangle(mid3x, mid3y, mid2x, mid2y, x3, y3, depth - 1);
 }
 
-function drawRandomFractalPattern(x, y, n, r, size_mult, iterations) {
-  const points = giveListFractalPoints(x, y, n, r, size_mult, iterations);
-
-  for (let i = 0; i < points.length; i++) {
-    const p1 = points[i];
-    const p2 = points[(i + 1) % points.length];
-    line(p1.x, p1.y, p2.x, p2.y);
-  }
-}
 
 function dragonCurve(x1, y1, x2, y2, depth) {
   if (depth === 0) {
@@ -232,7 +197,7 @@ function drawNGonFractal(
     const p1 = vertices[i];
     const p2 = vertices[(i + 1) % sides];
 
-    line(p1.x, p1.y, p2.x, p2.y, mult);
+    line(p1.x, p1.y, p2.x, p2.y, true,mult);
   }
 
   // Recursively draw fractals between each pair of vertices
@@ -311,7 +276,7 @@ function fractalTree(x, y, length, angle, depth, k=0.7) {
   const y2 = y + length * Math.sin(angle);
 
   // Draw the current branch
-  line(x,y,x2,y2)
+  line(x,y,x2,y2,true)
 
   // Recursively draw two sub-branches
   fractalTree(x2, y2, length * k, angle - Math.PI / 4, depth - 1,k);
@@ -320,7 +285,7 @@ function fractalTree(x, y, length, angle, depth, k=0.7) {
 
 function kochSnowflakeSegment(x1, y1, x2, y2, depth) {
   if (depth === 0) {
-    line(x1, y1, x2, y2);
+    line(x1, y1, x2, y2,true);
     return;
   }
 
