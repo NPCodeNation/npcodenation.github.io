@@ -6,9 +6,9 @@ let width = 2;
 
 function getColor(x, y, mult = 1) {
   // Adjust these values to control the color gradient
-  const r = Math.floor(128 + 128 * Math.sin((x ** 1.25 / 205) * mult));
-  const g = Math.floor(128 + 128 * Math.sin((y / 25) * mult));
-  const b = Math.floor(128 + 128 * Math.sin(((x * y) / 20005) * mult));
+  const r = Math.floor(100 + 128 * Math.sin((x ** 1.25 / 205) * mult));
+  const g = Math.floor(100 + 128 * Math.sin((y / 25) * mult));
+  const b = Math.floor(100 + 128 * Math.sin(((x * y) / 20005) * mult));
 
   return [r, g, b];
 }
