@@ -389,9 +389,11 @@ function example10(n=13) {
 
 // flower ... hexagon?
 function example11() {
-    for (i=0; i<52; i++) {
-        regularPolygon(center_x=400, center_y=300, sides = 6, radius = 50+i*3, angle_offset = 0+3*i*6.28/360)
-    }
+  for (i=0; i<75; i++) {
+    col = getColor(i*3,i*2);
+    setColor(col[0],col[1],col[2]);
+    regularPolygon(center_x=400+i, center_y=300, sides = 6, radius = 50+i*3, angle_offset = 0+3*i*6.28/360)
+  }
 }
 
 // cone
